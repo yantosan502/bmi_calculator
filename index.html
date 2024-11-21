@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator using Javascript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">BMI Calculator</h2>
+        <form>
+            <p class="inputs">
+                <label>Height (CM): </label>
+                <input type="number" id="height" min="1">
+            </p>
+            <p class="inputs">
+                <label>Weight (KG): </label>
+                <input type="number" id="weight" min="1">
+            </p>
+
+            <button class="calcBtn">Calculate</button>
+            <div style="margin-top: 20px;">Your BMI is: <p id="results"></p></div>
+            <p id="message"></p>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const height = parseInt(document.querySelector('#height').value);
+            const weight = parseInt(document.querySelector('#weight').value);
+            const results = document.querySelector('#results');
+            const message = document.querySelector('#message');
+
+            if ((height === '') || (height < 0) || (isNaN(height))) {
+                // NaN !== NaN
+                results.innerHTML = "Please provide a valid height";
+            } else if (weight === '' || weight < 0 || isNaN(weight)) {
+                results.innerHTML = "Please provide a valid weight";
+            } else {
+                // calculate BMI
+                const bmi = (weight / ((height * height) / 10000)).toFixed(2);
+                // display the results
+                results.innerHTML = `<span>${bmi}</span>`;
+
+                // display end message
+                if (bmi < 18.6) {
+                    message.innerHTML = "You are underweigght";
+                } else if (bmi > 18.6 && bmi < 24.9) {
+                    message.innerHTML = "Normal";
+                } else if (bmi > 24.9) {
+                    message.innerHTML = "You are Overweight";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
